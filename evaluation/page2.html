@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استبانات الطالبات - ملف إنجاز المعلمة منال بنت علي العيسى</title>
+    <style>
+        :root {
+            --primary-color: #f8d7e8;
+            --secondary-color: #e6a4c4;
+            --text-color: #333;
+            --sidebar-bg: #f7f8fa;
+            --sidebar-text: #6B7280;
+            --header-color: #C0EBF6;
+            --accent-color: #d14d72;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #fff;
+            color: var(--text-color);
+            background-image: url('../images/pink_flowers_background.webp');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: rgba(247, 248, 250, 0.9);
+            padding: 15px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: width 0.3s ease;
+            resize: horizontal;
+            overflow-x: hidden;
+            min-width: 180px;
+            max-width: 350px;
+            z-index: 100;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .logo h2 {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+        }
+        
+        .logo h3 {
+            font-size: 1.1rem;
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 5px;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 8px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+        
+        .nav-link.active {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .dropdown-container {
+            padding-right: 10px;
+            display: none;
+        }
+        
+        .dropdown-container.show {
+            display: block;
+        }
+        
+        .dropdown-item {
+            padding: 6px 10px;
+            margin-bottom: 3px;
+            display: block;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+        
+        .dropdown-item.active {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            font-weight: bold;
+        }
+        
+        .dropdown-toggle {
+            position: relative;
+        }
+        
+        .dropdown-toggle::after {
+            content: "▼";
+            font-size: 0.6rem;
+            margin-right: 5px;
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-right: 250px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            min-height: 100vh;
+            position: relative;
+            transition: margin-right 0.3s ease;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        .page-header::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 3px;
+            background-color: var(--secondary-color);
+            margin: 15px auto;
+        }
+        
+        .content-section {
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .content-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .content-section p {
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            margin: 10px 5px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #b33d5c;
+        }
+        
+        .floral-decoration {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            z-index: -1;
+            opacity: 0.8;
+        }
+        
+        .top-right {
+            top: 0;
+            right: 0;
+        }
+        
+        .bottom-left {
+            bottom: 0;
+            left: 0;
+        }
+        
+        .action-buttons {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .sidebar::-webkit-resizer {
+            background-color: var(--accent-color);
+            border-radius: 4px;
+        }
+        
+        .resize-handle {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background-color: rgba(0,0,0,0.1);
+            cursor: ew-resize;
+        }
+        
+        .survey-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-right: 4px solid var(--accent-color);
+        }
+        
+        .survey-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .survey-card h4 {
+            color: #555;
+            margin: 15px 0 10px;
+            font-size: 1.2rem;
+        }
+        
+        .survey-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .survey-table th, .survey-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .survey-table th {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .survey-table tr:nth-child(even) {
+            background-color: rgba(248, 215, 232, 0.3);
+        }
+        
+        .survey-table tr:hover {
+            background-color: rgba(248, 215, 232, 0.5);
+        }
+        
+        .chart-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            height: 300px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .chart-title {
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+        
+        .bar-chart {
+            display: flex;
+            height: 200px;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 0 20px;
+        }
+        
+        .bar {
+            width: 40px;
+            background-color: var(--accent-color);
+            margin: 0 5px;
+            position: relative;
+            transition: height 0.5s ease;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 0.8rem;
+            width: 60px;
+        }
+        
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-color);
+            color: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+        
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 0 10px;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            background-color: var(--accent-color);
+            margin-left: 5px;
+            border-radius: 3px;
+        }
+        
+        .pie-chart {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--accent-color) 0% 75%,
+                #6c757d 75% 85%,
+                #ffc107 85% 95%,
+                #dc3545 95% 100%
+            );
+            margin: 0 auto;
+        }
+        
+        .pie-legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .pie-legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 10px;
+        }
+        
+        .pie-legend-color {
+            width: 15px;
+            height: 15px;
+            margin-left: 5px;
+            border-radius: 3px;
+        }
+        
+        .color-excellent {
+            background-color: var(--accent-color);
+        }
+        
+        .color-good {
+            background-color: #6c757d;
+        }
+        
+        .color-average {
+            background-color: #ffc107;
+        }
+        
+        .color-poor {
+            background-color: #dc3545;
+        }
+        
+        .testimonial {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-right: 3px solid var(--accent-color);
+        }
+        
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        .testimonial-author {
+            text-align: left;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                resize: none;
+            }
+            
+            .main-content {
+                margin-right: 0;
+            }
+            
+            .resize-handle {
+                display: none;
+            }
+            
+            .chart-container {
+                padding: 10px;
+            }
+            
+            .bar {
+                width: 30px;
+            }
+            
+            .bar-label {
+                font-size: 0.7rem;
+                width: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="resize-handle" id="resize-handle"></div>
+            <div class="logo">
+                <h2>ملف إنجاز المعلمة</h2>
+                <h3>منال بنت علي العيسى</h3>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">الصفحة الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">الفهرس</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link dropdown-toggle">الملف الشخصي</a>
+                    <div class="dropdown-container">
+                        <a href="../personal/intro.html" class="dropdown-item">المقدمة</a>
+                        <a href="../personal/definition.html" class="dropdown-item">تعريف ملف الانجاز والهدف منه</a>
+                        <a href="../personal/vision.html" class="dropdown-item">الرؤية والرسالة</a>
+                        <a href="../personal/kingdom-goals.html" class="dropdown-item">الاهداف رؤية المملكة</a>
+                        <a href="../personal/education-goals.html" class="dropdown-item">اهداف العامة للتعليم في المملكة</a>
+                        <a href="../personal/teacher-tasks.html" class="dropdown-item">مهام المعلمة</a>
+                        <a href="../personal/cv.html" class="dropdown-item">السيرة الذاتية</a>
+                        <a href="../personal/ethics.html" class="dropdown-item">ميثاق اخلاقيات مهنة التعلم في المملكة</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link dropdown-toggle">الملف الأكاديمي</a>
+                    <div class="dropdown-container">
+                        <a href="../academic/page1.html" class="dropdown-item">محتوى أكاديمي 1</a>
+                        <a href="../academic/page2.html" class="dropdown-item">محتوى أكاديمي 2</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link dropdown-toggle">الملف التحصيلي</a>
+                    <div class="dropdown-container">
+                        <a href="../achievement/page1.html" class="dropdown-item">محتوى تحصيلي 1</a>
+                        <a href="../achievement/page2.html" class="dropdown-item">محتوى تحصيلي 2</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link dropdown-toggle active">ملف التقييم</a>
+                    <div class="dropdown-container show">
+                        <a href="page1.html" class="dropdown-item">تقييم الأداء</a>
+                        <a href="page2.html" class="dropdown-item active">استبانات الطالبات</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="../conclusion.html" class="nav-link">الخاتمة</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="main-content" id="main-content">
+            <img src="../images/floral_top_right.png" class="floral-decoration top-right" alt="زخرفة وردية">
+            <img src="../images/floral_bottom_left.jpg" class="floral-decoration bottom-left" alt="زخرفة وردية">
+            
+            <div class="page-header">
+                <h1>استبانات الطالبات</h1>
+            </div>
+            
+            <div class="content-section">
+                <h2>مقدمة</h2>
+                <p>تعد استبانات الطالبات من أهم أدوات التقييم التي تساعد المعلمة على معرفة آراء الطالبات في أدائها التدريسي، وتحديد نقاط القوة والضعف في طرق التدريس المستخدمة، وتطوير أساليبها التعليمية بما يتناسب مع احتياجات الطالبات وتطلعاتهن.</p>
+                
+                <p>في هذا القسم، أعرض نتائج استبانات الطالبات التي قمت بتوزيعها خلال العام الدراسي 1446هـ، والتي تهدف إلى قياس مدى رضا الطالبات عن أدائي التدريسي، وتقييم فاعلية استراتيجيات التدريس المستخدمة، وتحديد مجالات التحسين والتطوير.</p>
+                
+                <div class="survey-card">
+                    <h3>استبانة تقييم أداء المعلمة</h3>
+                    
+                    <h4>وصف الاستبانة:</h4>
+                    <p>تم توزيع استبانة تقييم أداء المعلمة على جميع طالبات الصف الثالث الثانوي (120 طالبة) في نهاية الفصل الدراسي الأول من العام الدراسي 1446هـ. وتضمنت الاستبانة 15 عبارة تقيس مختلف جوانب الأداء التدريسي، وتم استخدام مقياس ليكرت الخماسي (ممتاز، جيد جداً، جيد، مقبول، ضعيف) للإجابة على العبارات.</p>
+                    
+                    <h4>نتائج الاستبانة:</h4>
+                    <table class="survey-table">
+                        <thead>
+                            <tr>
+                                <th>م</th>
+                                <th>العبارة</th>
+                                <th>ممتاز</th>
+                                <th>جيد جداً</th>
+                                <th>جيد</th>
+                                <th>مقبول</th>
+                                <th>ضعيف</th>
+                                <th>المتوسط</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>تلتزم المعلمة بمواعيد الحصص</td>
+                                <td>95%</td>
+                                <td>5%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.95</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>تشرح المعلمة الدروس بطريقة واضحة ومفهومة</td>
+                                <td>85%</td>
+                                <td>10%</td>
+                                <td>5%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.80</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>تستخدم المعلمة استراتيجيات تدريس متنوعة</td>
+                                <td>90%</td>
+                                <td>7%</td>
+                                <td>3%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.87</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>تراعي المعلمة الفروق الفردية بين الطالبات</td>
+                                <td>75%</td>
+                                <td>15%</td>
+                                <td>7%</td>
+                                <td>3%</td>
+                                <td>0%</td>
+                                <td>4.62</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>تستخدم المعلمة وسائل تعليمية متنوعة</td>
+                                <td>88%</td>
+                                <td>10%</td>
+                                <td>2%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.86</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>تشجع المعلمة الطالبات على المشاركة والتفاعل</td>
+                                <td>92%</td>
+                                <td>5%</td>
+                                <td>3%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.89</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>تتعامل المعلمة مع الطالبات باحترام</td>
+                                <td>97%</td>
+                                <td>3%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.97</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>تقدم المعلمة تغذية راجعة مفيدة للطالبات</td>
+                                <td>80%</td>
+                                <td>15%</td>
+                                <td>5%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.75</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>تستخدم المعلمة أساليب تقويم متنوعة</td>
+                                <td>85%</td>
+                                <td>10%</td>
+                                <td>5%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.80</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>تربط المعلمة المادة العلمية بالحياة العملية</td>
+                                <td>78%</td>
+                                <td>15%</td>
+                                <td>7%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.71</td>
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td>تحفز المعلمة الطالبات على التفكير والإبداع</td>
+                                <td>83%</td>
+                                <td>12%</td>
+                                <td>5%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.78</td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>تدير المعلمة وقت الحصة بفاعلية</td>
+                                <td>90%</td>
+                                <td>7%</td>
+                                <td>3%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.87</td>
+                            </tr>
+                            <tr>
+                                <td>13</td>
+                                <td>تتمكن المعلمة من المادة العلمية</td>
+                                <td>95%</td>
+                                <td>5%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.95</td>
+                            </tr>
+                            <tr>
+                                <td>14</td>
+                                <td>تستخدم المعلمة التقنية في التدريس</td>
+                                <td>93%</td>
+                                <td>5%</td>
+                                <td>2%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.91</td>
+                            </tr>
+                            <tr>
+                                <td>15</td>
+                                <td>تهتم المعلمة بتنمية القيم والاتجاهات الإيجابية</td>
+                                <td>87%</td>
+                                <td>10%</td>
+                                <td>3%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.84</td>
+                            </tr>
+                            <tr>
+                                <td colspan="7">المتوسط العام</td>
+                                <td>4.84</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="chart-container">
+                        <h4 class="chart-title">متوسط تقييم الطالبات لأداء المعلمة</h4>
+                        <div class="bar-chart">
+                            <div class="bar" style="height: 99%;">
+                                <div class="bar-value">4.95</div>
+                                <div class="bar-label">الالتزام بالمواعيد</div>
+                            </div>
+                            <div class="bar" style="height: 96%;">
+                                <div class="bar-value">4.80</div>
+                                <div class="bar-label">وضوح الشرح</div>
+                            </div>
+                            <div class="bar" style="height: 97.4%;">
+                                <div class="bar-value">4.87</div>
+                                <div class="bar-label">تنوع الاستراتيجيات</div>
+                            </div>
+                            <div class="bar" style="height: 92.4%;">
+                                <div class="bar-value">4.62</div>
+                                <div class="bar-label">مراعاة الفروق</div>
+                            </div>
+                            <div class="bar" style="height: 97.2%;">
+                                <div class="bar-value">4.86</div>
+                                <div class="bar-label">تنوع الوسائل</div>
+                            </div>
+                            <div class="bar" style="height: 97.8%;">
+                                <div class="bar-value">4.89</div>
+                                <div class="bar-label">تشجيع المشاركة</div>
+                            </div>
+                            <div class="bar" style="height: 99.4%;">
+                                <div class="bar-value">4.97</div>
+                                <div class="bar-label">الاحترام</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4>تحليل النتائج:</h4>
+                    <p>من خلال تحليل نتائج الاستبانة، يتضح ما يلي:</p>
+                    <ul>
+                        <li>حصلت المعلمة على تقييم عام ممتاز من الطالبات، بمتوسط عام 4.84 من 5.</li>
+                        <li>أعلى تقييم كان في مجال "التعامل مع الطالبات باحترام" بمتوسط 4.97، يليه "الالتزام بمواعيد الحصص" و"التمكن من المادة العلمية" بمتوسط 4.95.</li>
+                        <li>أقل تقييم كان في مجال "مراعاة الفروق الفردية بين الطالبات" بمتوسط 4.62، وهو ما يزال في مستوى ممتاز، ولكنه يشير إلى مجال يمكن تطويره.</li>
+                        <li>نسبة الطالبات اللاتي قيمن أداء المعلمة بدرجة ممتاز تراوحت بين 75% و97%، وهي نسب مرتفعة تدل على رضا الطالبات عن أداء المعلمة.</li>
+                        <li>لم تحصل المعلمة على أي تقييم "ضعيف" في أي من مجالات التقييم.</li>
+                    </ul>
+                </div>
+                
+                <div class="survey-card">
+                    <h3>استبانة فاعلية استراتيجيات التدريس</h3>
+                    
+                    <h4>وصف الاستبانة:</h4>
+                    <p>تم توزيع استبانة لقياس فاعلية استراتيجيات التدريس المستخدمة على عينة من طالبات الصف الثالث الثانوي (50 طالبة) في منتصف الفصل الدراسي الثاني من العام الدراسي 1446هـ. وتضمنت الاستبانة تقييم فاعلية 5 استراتيجيات تدريس رئيسة، وتم استخدام مقياس ليكرت الخماسي (فعالة جداً، فعالة، متوسطة الفاعلية، قليلة الفاعلية، غير فعالة) للإجابة على العبارات.</p>
+                    
+                    <h4>نتائج الاستبانة:</h4>
+                    <table class="survey-table">
+                        <thead>
+                            <tr>
+                                <th>م</th>
+                                <th>استراتيجية التدريس</th>
+                                <th>فعالة جداً</th>
+                                <th>فعالة</th>
+                                <th>متوسطة الفاعلية</th>
+                                <th>قليلة الفاعلية</th>
+                                <th>غير فعالة</th>
+                                <th>المتوسط</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>التعلم التعاوني</td>
+                                <td>80%</td>
+                                <td>15%</td>
+                                <td>5%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.75</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>العصف الذهني</td>
+                                <td>75%</td>
+                                <td>20%</td>
+                                <td>5%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.70</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>خرائط المفاهيم</td>
+                                <td>70%</td>
+                                <td>20%</td>
+                                <td>7%</td>
+                                <td>3%</td>
+                                <td>0%</td>
+                                <td>4.57</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>التعلم بالاكتشاف</td>
+                                <td>65%</td>
+                                <td>25%</td>
+                                <td>10%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.55</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>التعلم النشط</td>
+                                <td>85%</td>
+                                <td>10%</td>
+                                <td>5%</td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>4.80</td>
+                            </tr>
+                            <tr>
+                                <td colspan="7">المتوسط العام</td>
+                                <td>4.67</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="chart-container">
+                        <h4 class="chart-title">تقييم فاعلية استراتيجيات التدريس</h4>
+                        <div class="bar-chart">
+                            <div class="bar" style="height: 95%;">
+                                <div class="bar-value">4.75</div>
+                                <div class="bar-label">التعلم التعاوني</div>
+                            </div>
+                            <div class="bar" style="height: 94%;">
+                                <div class="bar-value">4.70</div>
+                                <div class="bar-label">العصف الذهني</div>
+                            </div>
+                            <div class="bar" style="height: 91.4%;">
+                                <div class="bar-value">4.57</div>
+                                <div class="bar-label">خرائط المفاهيم</div>
+                            </div>
+                            <div class="bar" style="height: 91%;">
+                                <div class="bar-value">4.55</div>
+                                <div class="bar-label">التعلم بالاكتشاف</div>
+                            </div>
+                            <div class="bar" style="height: 96%;">
+                                <div class="bar-value">4.80</div>
+                                <div class="bar-label">التعلم النشط</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4>تحليل النتائج:</h4>
+                    <p>من خلال تحليل نتائج الاستبانة، يتضح ما يلي:</p>
+                    <ul>
+                        <li>حصلت جميع استراتيجيات التدريس المستخدمة على تقييم مرتفع من الطالبات، بمتوسط عام 4.67 من 5.</li>
+                        <li>أكثر الاستراتيجيات فاعلية من وجهة نظر الطالبات هي استراتيجية "التعلم النشط" بمتوسط 4.80، تليها استراتيجية "التعلم التعاوني" بمتوسط 4.75.</li>
+                        <li>أقل الاستراتيجيات فاعلية من وجهة نظر الطالبات هي استراتيجية "التعلم بالاكتشاف" بمتوسط 4.55، وهو ما يزال في مستوى فعال جداً، ولكنه يشير إلى مجال يمكن تطويره.</li>
+                        <li>نسبة الطالبات اللاتي قيمن فاعلية الاستراتيجيات بدرجة "فعالة جداً" تراوحت بين 65% و85%، وهي نسب مرتفعة تدل على فاعلية الاستراتيجيات المستخدمة.</li>
+                        <li>لم تحصل أي استراتيجية على تقييم "غير فعالة" من أي طالبة.</li>
+                    </ul>
+                </div>
+                
+                <div class="survey-card">
+                    <h3>استبانة الرضا العام عن المادة والمعلمة</h3>
+                    
+                    <h4>وصف الاستبانة:</h4>
+                    <p>تم توزيع استبانة لقياس مستوى الرضا العام عن المادة والمعلمة على جميع طالبات الصف الثالث الثانوي (120 طالبة) في نهاية العام الدراسي 1446هـ. وتضمنت الاستبانة سؤالاً رئيساً عن مستوى الرضا العام، وتم استخدام مقياس ليكرت الرباعي (ممتاز، جيد، متوسط، ضعيف) للإجابة على السؤال.</p>
+                    
+                    <h4>نتائج الاستبانة:</h4>
+                    <div class="chart-container">
+                        <h4 class="chart-title">مستوى الرضا العام عن المادة والمعلمة</h4>
+                        <div class="pie-chart"></div>
+                        <div class="pie-legend">
+                            <div class="pie-legend-item">
+                                <div class="pie-legend-color color-excellent"></div>
+                                <span>ممتاز (75%)</span>
+                            </div>
+                            <div class="pie-legend-item">
+                                <div class="pie-legend-color color-good"></div>
+                                <span>جيد (15%)</span>
+                            </div>
+                            <div class="pie-legend-item">
+                                <div class="pie-legend-color color-average"></div>
+                                <span>متوسط (8%)</span>
+                            </div>
+                            <div class="pie-legend-item">
+                                <div class="pie-legend-color color-poor"></div>
+                                <span>ضعيف (2%)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4>تحليل النتائج:</h4>
+                    <p>من خلال تحليل نتائج الاستبانة، يتضح ما يلي:</p>
+                    <ul>
+                        <li>نسبة الطالبات اللاتي أبدين رضا ممتاز عن المادة والمعلمة بلغت 75%، وهي نسبة مرتفعة تدل على رضا غالبية الطالبات.</li>
+                        <li>نسبة الطالبات اللاتي أبدين رضا جيد بلغت 15%، مما يعني أن 90% من الطالبات راضيات بدرجة جيدة أو ممتازة.</li>
+                        <li>نسبة الطالبات اللاتي أبدين رضا متوسط بلغت 8%، وهي نسبة قليلة نسبياً.</li>
+                        <li>نسبة الطالبات اللاتي أبدين رضا ضعيف بلغت 2% فقط، وهي نسبة ضئيلة جداً.</li>
+                    </ul>
+                </div>
+                
+                <h2>آراء وتعليقات الطالبات</h2>
+                <p>بالإضافة إلى الاستبانات الكمية، تم جمع آراء وتعليقات الطالبات حول أداء المعلمة وطرق التدريس المستخدمة. وفيما يلي بعض التعليقات المختارة:</p>
+                
+                <div class="testimonial">
+                    <p>"أسلوب المعلمة في الشرح ممتاز جداً، وتستخدم وسائل تعليمية متنوعة تساعدنا على فهم المادة بسهولة. كما أنها تشجعنا على المشاركة والتفاعل في الحصة."</p>
+                    <div class="testimonial-author">طالبة من الصف الثالث الثانوي</div>
+                </div>
+                
+                <div class="testimonial">
+                    <p>"أحب طريقة المعلمة في ربط المادة العلمية بالحياة العملية، مما يجعل المادة أكثر متعة وفائدة. كما أن استخدامها للتقنية في التدريس يساعدنا على فهم المادة بشكل أفضل."</p>
+                    <div class="testimonial-author">طالبة من الصف الثالث الثانوي</div>
+                </div>
+                
+                <div class="testimonial">
+                    <p>"استراتيجية التعلم التعاوني التي تستخدمها المعلمة ساعدتني كثيراً على فهم المادة وتطوير مهاراتي في التواصل والتعاون مع زميلاتي. أتمنى أن تستمر في استخدام هذه الاستراتيجية."</p>
+                    <div class="testimonial-author">طالبة من الصف الثالث الثانوي</div>
+                </div>
+                
+                <div class="testimonial">
+                    <p>"أقدر احترام المعلمة لجميع الطالبات وتعاملها الراقي معنا. كما أنها تهتم بتنمية القيم والاتجاهات الإيجابية لدينا، وليس فقط بتدريس المادة العلمية."</p>
+                    <div class="testimonial-author">طالبة من الصف الثالث الثانوي</div>
+                </div>
+                
+                <div class="testimonial">
+                    <p>"أتمنى أن تراعي المعلمة الفروق الفردية بين الطالبات بشكل أكبر، فبعض الطالبات يحتجن إلى وقت أطول لفهم بعض المواضيع الصعبة."</p>
+                    <div class="testimonial-author">طالبة من الصف الثالث الثانوي</div>
+                </div>
+                
+                <h2>الخلاصة والتوصيات</h2>
+                <p>من خلال تحليل نتائج استبانات الطالبات، يمكن استخلاص ما يلي:</p>
+                
+                <h3>نقاط القوة:</h3>
+                <ul>
+                    <li>التعامل مع الطالبات باحترام وتقدير</li>
+                    <li>الالتزام بمواعيد الحصص والتمكن من المادة العلمية</li>
+                    <li>استخدام التقنية في التدريس بفاعلية</li>
+                    <li>تشجيع الطالبات على المشاركة والتفاعل</li>
+                    <li>فاعلية استراتيجيات التعلم النشط والتعلم التعاوني</li>
+                </ul>
+                
+                <h3>مجالات التحسين:</h3>
+                <ul>
+                    <li>مراعاة الفروق الفردية بين الطالبات بشكل أكبر</li>
+                    <li>تطوير استراتيجية التعلم بالاكتشاف لتكون أكثر فاعلية</li>
+                    <li>زيادة ربط المادة العلمية بالحياة العملية</li>
+                </ul>
+                
+                <h3>التوصيات:</h3>
+                <ul>
+                    <li>الاستمرار في استخدام استراتيجيات التعلم النشط والتعلم التعاوني</li>
+                    <li>تطوير أساليب مراعاة الفروق الفردية بين الطالبات</li>
+                    <li>تحسين استراتيجية التعلم بالاكتشاف لتكون أكثر فاعلية</li>
+                    <li>زيادة الأمثلة والتطبيقات العملية للمادة العلمية</li>
+                    <li>الاستمرار في استخدام التقنية في التدريس وتطوير المهارات التقنية</li>
+                </ul>
+            </div>
+            
+            <div class="action-buttons">
+                <a href="page1.html" class="btn">السابق: تقييم الأداء</a>
+                <a href="../conclusion.html" class="btn btn-primary">التالي: الخاتمة</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle dropdown menus
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const dropdownContainer = this.nextElementSibling;
+                    dropdownContainer.classList.toggle('show');
+                });
+            });
+            
+            // Manual sidebar resize functionality
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.getElementById('main-content');
+            const resizeHandle = document.getElementById('resize-handle');
+            
+            if (resizeHandle) {
+                resizeHandle.addEventListener('mousedown', initResize, false);
+            }
+            
+            function initResize(e) {
+                window.addEventListener('mousemove', resize, false);
+                window.addEventListener('mouseup', stopResize, false);
+            }
+            
+            function resize(e) {
+                // Calculate new width based on mouse position
+                const newWidth = document.body.clientWidth - e.clientX;
+                
+                // Apply min/max constraints
+                if (newWidth > 180 && newWidth < 350) {
+                    sidebar.style.width = newWidth + 'px';
+                    mainContent.style.marginRight = newWidth + 'px';
+                }
+            }
+            
+            function stopResize() {
+                window.removeEventListener('mousemove', resize, false);
+                window.removeEventListener('mouseup', stopResize, false);
+            }
+        });
+    </script>
+</body>
+</html>
