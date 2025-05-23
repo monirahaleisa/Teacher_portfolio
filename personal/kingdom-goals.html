@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أهداف رؤية المملكة - ملف إنجاز المعلمة منال بنت علي العيسى</title>
+    <style>
+        :root {
+            --primary-color: #f8d7e8;
+            --secondary-color: #e6a4c4;
+            --text-color: #333;
+            --sidebar-bg: #f7f8fa;
+            --sidebar-text: #6B7280;
+            --header-color: #C0EBF6;
+            --accent-color: #d14d72;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #fff;
+            color: var(--text-color);
+            background-image: url('../images/pink_flowers_background.webp');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: rgba(247, 248, 250, 0.9);
+            padding: 15px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: width 0.3s ease;
+            resize: horizontal;
+            overflow-x: hidden;
+            min-width: 180px;
+            max-width: 350px;
+            z-index: 100;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .logo h2 {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+        }
+        
+        .logo h3 {
+            font-size: 1.1rem;
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 5px;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 8px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+        
+        .nav-link.active {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .dropdown-container {
+            padding-right: 10px;
+            display: none;
+        }
+        
+        .dropdown-container.show {
+            display: block;
+        }
+        
+        .dropdown-item {
+            padding: 6px 10px;
+            margin-bottom: 3px;
+            display: block;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+        
+        .dropdown-item.active {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            font-weight: bold;
+        }
+        
+        .dropdown-toggle {
+            position: relative;
+        }
+        
+        .dropdown-toggle::after {
+            content: "▼";
+            font-size: 0.6rem;
+            margin-right: 5px;
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-right: 250px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            min-height: 100vh;
+            position: relative;
+            transition: margin-right 0.3s ease;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        .page-header::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 3px;
+            background-color: var(--secondary-color);
+            margin: 15px auto;
+        }
+        
+        .content-section {
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .content-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .content-section p {
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            margin: 10px 5px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #b33d5c;
+        }
+        
+        .floral-decoration {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            z-index: -1;
+            opacity: 0.8;
+        }
+        
+        .top-right {
+            top: 0;
+            right: 0;
+        }
+        
+        .bottom-left {
+            bottom: 0;
+            left: 0;
+        }
+        
+        .action-buttons {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .sidebar::-webkit-resizer {
+            background-color: var(--accent-color);
+            border-radius: 4px;
+        }
+        
+        .resize-handle {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background-color: rgba(0,0,0,0.1);
+            cursor: ew-resize;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                resize: none;
+            }
+            
+            .main-content {
+                margin-right: 0;
+            }
+            
+            .resize-handle {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="resize-handle" id="resize-handle"></div>
+            <div class="logo">
+                <h2>ملف إنجاز المعلمة</h2>
+                <h3>منال بنت علي العيسى</h3>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">الصفحة الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">الفهرس</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link dropdown-toggle">الملف الشخصي</a>
+                    <div class="dropdown-container show">
+                        <a href="intro.html" class="dropdown-item">المقدمة</a>
+                        <a href="definition.html" class="dropdown-item">تعريف ملف الانجاز والهدف منه</a>
+                        <a href="vision.html" class="dropdown-item">الرؤية والرسالة</a>
+                        <a href="kingdom-goals.html" class="dropdown-item active">الاهداف رؤية المملكة</a>
+                        <a href="education-goals.html" class="dropdown-item">اهداف العامة للتعليم في المملكة</a>
+                        <a href="teacher-tasks.html" class="dropdown-item">مهام المعلمة</a>
+                        <a href="cv.html" class="dropdown-item">السيرة الذاتية</a>
+                        <a href="ethics.html" class="dropdown-item">ميثاق اخلاقيات مهنة التعلم في المملكة</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link dropdown-toggle">الملف الأكاديمي</a>
+                    <div class="dropdown-container">
+                        <a href="../academic/page1.html" class="dropdown-item">محتوى أكاديمي 1</a>
+                        <a href="../academic/page2.html" class="dropdown-item">محتوى أكاديمي 2</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link dropdown-toggle">الملف التحصيلي</a>
+                    <div class="dropdown-container">
+                        <a href="../achievement/page1.html" class="dropdown-item">محتوى تحصيلي 1</a>
+                        <a href="../achievement/page2.html" class="dropdown-item">محتوى تحصيلي 2</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link dropdown-toggle">ملف التقييم</a>
+                    <div class="dropdown-container">
+                        <a href="../evaluation/page1.html" class="dropdown-item">محتوى تقييمي 1</a>
+                        <a href="../evaluation/page2.html" class="dropdown-item">محتوى تقييمي 2</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="../conclusion.html" class="nav-link">الخاتمة</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="main-content" id="main-content">
+            <img src="../images/floral_top_right.png" class="floral-decoration top-right" alt="زخرفة وردية">
+            <img src="../images/floral_bottom_left.jpg" class="floral-decoration bottom-left" alt="زخرفة وردية">
+            
+            <div class="page-header">
+                <h1>أهداف رؤية المملكة 2030</h1>
+            </div>
+            
+            <div class="content-section">
+                <h2>نبذة عن رؤية المملكة 2030</h2>
+                <p>رؤية المملكة 2030 هي خطة طموحة تهدف إلى تحويل المملكة العربية السعودية إلى نموذج عالمي رائد في جميع المجالات. تستند هذه الرؤية إلى ثلاثة محاور رئيسية: مجتمع حيوي، واقتصاد مزدهر، ووطن طموح.</p>
+                
+                <h2>أهداف رؤية المملكة 2030 في مجال التعليم</h2>
+                <p>تولي رؤية المملكة 2030 اهتماماً كبيراً بقطاع التعليم، باعتباره ركيزة أساسية لتحقيق التنمية المستدامة وبناء مجتمع المعرفة. ومن أبرز أهداف الرؤية في مجال التعليم:</p>
+                
+                <ol style="margin-right: 20px; margin-bottom: 15px;">
+                    <li><strong>تحسين تصنيف المؤسسات التعليمية:</strong> الوصول بخمس جامعات سعودية على الأقل إلى قائمة أفضل 200 جامعة عالمية.</li>
+                    <li><strong>تطوير المناهج التعليمية:</strong> تطوير المناهج وأساليب التعليم والتقويم لتعزيز القيم والمهارات الأساسية.</li>
+                    <li><strong>سد الفجوة بين مخرجات التعليم ومتطلبات سوق العمل:</strong> مواءمة مخرجات التعليم مع احتياجات سوق العمل.</li>
+                    <li><strong>تعزيز مشاركة الأسرة في العملية التعليمية:</strong> إشراك الأسرة في العملية التعليمية.</li>
+                    <li><strong>تطوير التعليم المبكر:</strong> توفير التعليم المبكر للأطفال وتطوير المعايير الخاصة به.</li>
+                    <li><strong>تحسين البيئة التعليمية:</strong> تهيئة البيئة التعليمية المحفزة للإبداع والابتكار.</li>
+                    <li><strong>تعزيز القيم والمهارات الأساسية للطلاب:</strong> غرس القيم الوطنية والاجتماعية وتنمية مهارات القرن الحادي والعشرين.</li>
+                    <li><strong>تطوير المعلمين:</strong> رفع كفاءة المعلمين وتطوير قدراتهم المهنية.</li>
+                </ol>
+                
+                <h2>دور المعلمة في تحقيق رؤية المملكة 2030</h2>
+                <p>للمعلمة دور محوري في تحقيق أهداف رؤية المملكة 2030 في مجال التعليم، ويتمثل هذا الدور في:</p>
+                
+                <ul style="margin-right: 20px; margin-bottom: 15px;">
+                    <li>تطبيق أساليب تدريس حديثة تعزز مهارات التفكير الناقد والإبداعي لدى الطالبات</li>
+                    <li>توظيف التقنية في العملية التعليمية بشكل فعال</li>
+                    <li>تنمية مهارات القرن الحادي والعشرين لدى الطالبات</li>
+                    <li>غرس القيم الإسلامية والوطنية في نفوس الطالبات</li>
+                    <li>تعزيز مفهوم المواطنة الرقمية والمسؤولية المجتمعية</li>
+                    <li>التطوير المهني المستمر لمواكبة المستجدات في مجال التعليم</li>
+                    <li>المشاركة في البحوث التربوية والمبادرات التطويرية</li>
+                    <li>بناء شراكة فاعلة مع أولياء الأمور والمجتمع المحلي</li>
+                </ul>
+                
+                <p>من خلال هذا الدور، تسهم المعلمة في تحقيق رؤية المملكة 2030 وبناء جيل واعٍ ومبدع، قادر على المنافسة عالمياً، ومتمسك بهويته الإسلامية والوطنية.</p>
+            </div>
+            
+            <div class="action-buttons">
+                <a href="vision.html" class="btn">السابق: الرؤية والرسالة</a>
+                <a href="education-goals.html" class="btn btn-primary">التالي: أهداف التعليم في المملكة</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle dropdown menus
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const dropdownContainer = this.nextElementSibling;
+                    dropdownContainer.classList.toggle('show');
+                });
+            });
+            
+            // Manual sidebar resize functionality
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.getElementById('main-content');
+            const resizeHandle = document.getElementById('resize-handle');
+            
+            if (resizeHandle) {
+                resizeHandle.addEventListener('mousedown', initResize, false);
+            }
+            
+            function initResize(e) {
+                window.addEventListener('mousemove', resize, false);
+                window.addEventListener('mouseup', stopResize, false);
+            }
+            
+            function resize(e) {
+                // Calculate new width based on mouse position
+                const newWidth = document.body.clientWidth - e.clientX;
+                
+                // Apply min/max constraints
+                if (newWidth > 180 && newWidth < 350) {
+                    sidebar.style.width = newWidth + 'px';
+                    mainContent.style.marginRight = newWidth + 'px';
+                }
+            }
+            
+            function stopResize() {
+                window.removeEventListener('mousemove', resize, false);
+                window.removeEventListener('mouseup', stopResize, false);
+            }
+        });
+    </script>
+</body>
+</html>

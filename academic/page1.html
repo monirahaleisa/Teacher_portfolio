@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملف الأكاديمي - ملف إنجاز المعلمة منال بنت علي العيسى</title>
+    <style>
+        :root {
+            --primary-color: #f8d7e8;
+            --secondary-color: #e6a4c4;
+            --text-color: #333;
+            --sidebar-bg: #f7f8fa;
+            --sidebar-text: #6B7280;
+            --header-color: #C0EBF6;
+            --accent-color: #d14d72;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #fff;
+            color: var(--text-color);
+            background-image: url('../images/pink_flowers_background.webp');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: rgba(247, 248, 250, 0.9);
+            padding: 15px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: width 0.3s ease;
+            resize: horizontal;
+            overflow-x: hidden;
+            min-width: 180px;
+            max-width: 350px;
+            z-index: 100;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .logo h2 {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+        }
+        
+        .logo h3 {
+            font-size: 1.1rem;
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 5px;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 8px;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+        
+        .nav-link.active {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .dropdown-container {
+            padding-right: 10px;
+            display: none;
+        }
+        
+        .dropdown-container.show {
+            display: block;
+        }
+        
+        .dropdown-item {
+            padding: 6px 10px;
+            margin-bottom: 3px;
+            display: block;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+        
+        .dropdown-item.active {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            font-weight: bold;
+        }
+        
+        .dropdown-toggle {
+            position: relative;
+        }
+        
+        .dropdown-toggle::after {
+            content: "▼";
+            font-size: 0.6rem;
+            margin-right: 5px;
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-right: 250px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            min-height: 100vh;
+            position: relative;
+            transition: margin-right 0.3s ease;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        .page-header::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 3px;
+            background-color: var(--secondary-color);
+            margin: 15px auto;
+        }
+        
+        .content-section {
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .content-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .content-section p {
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            margin: 10px 5px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #b33d5c;
+        }
+        
+        .floral-decoration {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            z-index: -1;
+            opacity: 0.8;
+        }
+        
+        .top-right {
+            top: 0;
+            right: 0;
+        }
+        
+        .bottom-left {
+            bottom: 0;
+            left: 0;
+        }
+        
+        .action-buttons {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .sidebar::-webkit-resizer {
+            background-color: var(--accent-color);
+            border-radius: 4px;
+        }
+        
+        .resize-handle {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background-color: rgba(0,0,0,0.1);
+            cursor: ew-resize;
+        }
+        
+        .academic-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-right: 4px solid var(--accent-color);
+        }
+        
+        .academic-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+        
+        .academic-card .date {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .academic-card ul {
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .academic-card li {
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                resize: none;
+            }
+            
+            .main-content {
+                margin-right: 0;
+            }
+            
+            .resize-handle {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="resize-handle" id="resize-handle"></div>
+            <div class="logo">
+                <h2>ملف إنجاز المعلمة</h2>
+                <h3>منال بنت علي العيسى</h3>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">الصفحة الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">الفهرس</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link dropdown-toggle">الملف الشخصي</a>
+                    <div class="dropdown-container">
+                        <a href="../personal/intro.html" class="dropdown-item">المقدمة</a>
+                        <a href="../personal/definition.html" class="dropdown-item">تعريف ملف الانجاز والهدف منه</a>
+                        <a href="../personal/vision.html" class="dropdown-item">الرؤية والرسالة</a>
+                        <a href="../personal/kingdom-goals.html" class="dropdown-item">الاهداف رؤية المملكة</a>
+                        <a href="../personal/education-goals.html" class="dropdown-item">اهداف العامة للتعليم في المملكة</a>
+                        <a href="../personal/teacher-tasks.html" class="dropdown-item">مهام المعلمة</a>
+                        <a href="../personal/cv.html" class="dropdown-item">السيرة الذاتية</a>
+                        <a href="../personal/ethics.html" class="dropdown-item">ميثاق اخلاقيات مهنة التعلم في المملكة</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link dropdown-toggle active">الملف الأكاديمي</a>
+                    <div class="dropdown-container show">
+                        <a href="page1.html" class="dropdown-item active">الخطط الدراسية</a>
+                        <a href="page2.html" class="dropdown-item">استراتيجيات التدريس</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link dropdown-toggle">الملف التحصيلي</a>
+                    <div class="dropdown-container">
+                        <a href="../achievement/page1.html" class="dropdown-item">الدورات التدريبية</a>
+                        <a href="../achievement/page2.html" class="dropdown-item">الشهادات والإنجازات</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link dropdown-toggle">ملف التقييم</a>
+                    <div class="dropdown-container">
+                        <a href="../evaluation/page1.html" class="dropdown-item">تقييم الأداء</a>
+                        <a href="../evaluation/page2.html" class="dropdown-item">استبانات الطالبات</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="../conclusion.html" class="nav-link">الخاتمة</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="main-content" id="main-content">
+            <img src="../images/floral_top_right.png" class="floral-decoration top-right" alt="زخرفة وردية">
+            <img src="../images/floral_bottom_left.jpg" class="floral-decoration bottom-left" alt="زخرفة وردية">
+            
+            <div class="page-header">
+                <h1>الخطط الدراسية</h1>
+            </div>
+            
+            <div class="content-section">
+                <h2>مقدمة</h2>
+                <p>تعد الخطط الدراسية من أهم عناصر العملية التعليمية، حيث تساعد المعلمة على تنظيم عملها وتحقيق أهداف المنهج بطريقة منظمة وفعالة. وتتضمن الخطط الدراسية تحديد الأهداف التعليمية، واختيار استراتيجيات التدريس المناسبة، وتحديد أساليب التقويم، وتوزيع المحتوى على الفترة الزمنية المحددة.</p>
+                
+                <p>في هذا القسم، أعرض نماذج من الخطط الدراسية التي أعددتها لمادة اللغة العربية للمرحلة الثانوية، والتي تعكس رؤيتي التربوية وفلسفتي في التعليم، وتراعي احتياجات الطالبات وقدراتهن، وتتماشى مع أهداف التعليم في المملكة العربية السعودية ورؤية 2030.</p>
+                
+                <div class="academic-card">
+                    <h3>الخطة الفصلية لمادة اللغة العربية (3) - الصف الثاني الثانوي</h3>
+                    <div class="date">الفصل الدراسي الأول - العام الدراسي 1444/1445هـ</div>
+                    
+                    <h4>الأهداف العامة:</h4>
+                    <ul>
+                        <li>تنمية مهارات اللغة العربية الأساسية (الاستماع، التحدث، القراءة، الكتابة)</li>
+                        <li>تعزيز قيم الانتماء الوطني والهوية الإسلامية</li>
+                        <li>تنمية مهارات التفكير الناقد والإبداعي</li>
+                        <li>إكساب الطالبات مهارات التعلم الذاتي والبحث العلمي</li>
+                        <li>تعزيز القيم الأخلاقية والاجتماعية الإيجابية</li>
+                    </ul>
+                    
+                    <h4>توزيع المقرر على أسابيع الفصل الدراسي:</h4>
+                    <table border="1" style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+                        <tr style="background-color: var(--primary-color);">
+                            <th style="padding: 8px; text-align: center;">الأسبوع</th>
+                            <th style="padding: 8px; text-align: center;">الموضوعات</th>
+                            <th style="padding: 8px; text-align: center;">استراتيجيات التدريس</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">الأول</td>
+                            <td style="padding: 8px;">التهيئة والتعارف - مراجعة عامة</td>
+                            <td style="padding: 8px;">العصف الذهني - الحوار والمناقشة</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">الثاني</td>
+                            <td style="padding: 8px;">الوحدة الأولى: نص الانطلاق "التنمية المستدامة"</td>
+                            <td style="padding: 8px;">القراءة الموجهة - التعلم التعاوني</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">الثالث</td>
+                            <td style="padding: 8px;">الوحدة الأولى: الدروس اللغوية (الأفعال الناسخة)</td>
+                            <td style="padding: 8px;">خرائط المفاهيم - التعلم بالاكتشاف</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">الرابع</td>
+                            <td style="padding: 8px;">الوحدة الأولى: التواصل الكتابي (كتابة مقال)</td>
+                            <td style="padding: 8px;">النمذجة - التعلم بالأقران</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">الخامس</td>
+                            <td style="padding: 8px;">الوحدة الثانية: نص الانطلاق "الإعلام الجديد"</td>
+                            <td style="padding: 8px;">التفكير الناقد - المناقشة</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">السادس</td>
+                            <td style="padding: 8px;">الوحدة الثانية: الدروس اللغوية (الحروف الناسخة)</td>
+                            <td style="padding: 8px;">التعلم النشط - حل المشكلات</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">السابع</td>
+                            <td style="padding: 8px;">الوحدة الثانية: التواصل الشفهي (الحوار)</td>
+                            <td style="padding: 8px;">لعب الأدوار - المحاكاة</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">الثامن</td>
+                            <td style="padding: 8px;">اختبارات منتصف الفصل الدراسي</td>
+                            <td style="padding: 8px;">التقويم المستمر</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">التاسع</td>
+                            <td style="padding: 8px;">الوحدة الثالثة: نص الانطلاق "الأمن الفكري"</td>
+                            <td style="padding: 8px;">التفكير الناقد - المناقشة</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">العاشر</td>
+                            <td style="padding: 8px;">الوحدة الثالثة: الدروس اللغوية (أسلوب الشرط)</td>
+                            <td style="padding: 8px;">خرائط المفاهيم - التعلم التعاوني</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">الحادي عشر</td>
+                            <td style="padding: 8px;">الوحدة الثالثة: التواصل الكتابي (كتابة تقرير)</td>
+                            <td style="padding: 8px;">النمذجة - التعلم بالمشروعات</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">الثاني عشر</td>
+                            <td style="padding: 8px;">الوحدة الرابعة: نص الانطلاق "الصناعات الوطنية"</td>
+                            <td style="padding: 8px;">القراءة الموجهة - العصف الذهني</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">الثالث عشر</td>
+                            <td style="padding: 8px;">الوحدة الرابعة: الدروس اللغوية (الممنوع من الصرف)</td>
+                            <td style="padding: 8px;">التعلم بالاكتشاف - خرائط المفاهيم</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">الرابع عشر</td>
+                            <td style="padding: 8px;">الوحدة الرابعة: التواصل الشفهي (الإلقاء)</td>
+                            <td style="padding: 8px;">لعب الأدوار - التعلم بالنمذجة</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">الخامس عشر</td>
+                            <td style="padding: 8px;">مراجعة عامة</td>
+                            <td style="padding: 8px;">التعلم التعاوني - حل المشكلات</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; text-align: center;">السادس عشر</td>
+                            <td style="padding: 8px;">الاختبارات النهائية</td>
+                            <td style="padding: 8px;">التقويم الختامي</td>
+                        </tr>
+                    </table>
+                    
+                    <h4>أساليب التقويم:</h4>
+                    <ul>
+                        <li>التقويم المستمر (30%): المشاركة الصفية، الواجبات المنزلية، الأنشطة الصفية</li>
+                        <li>اختبارات قصيرة (20%): اختبارات أسبوعية قصيرة</li>
+                        <li>اختبار منتصف الفصل (20%): اختبار شامل للوحدتين الأولى والثانية</li>
+                        <li>الاختبار النهائي (30%): اختبار شامل للمقرر كاملاً</li>
+                    </ul>
+                </div>
+                
+                <div class="academic-card">
+                    <h3>خطة درس نموذجية</h3>
+                    <div class="date">الوحدة الأولى: نص الانطلاق "التنمية المستدامة"</div>
+                    
+                    <h4>معلومات الدرس:</h4>
+                    <ul>
+                        <li><strong>المادة:</strong> اللغة العربية (3)</li>
+                        <li><strong>الصف:</strong> الثاني الثانوي</li>
+                        <li><strong>الزمن:</strong> حصتان دراسيتان (90 دقيقة)</li>
+                        <li><strong>الموضوع:</strong> نص الانطلاق "التنمية المستدامة"</li>
+                    </ul>
+                    
+                    <h4>الأهداف التعليمية:</h4>
+                    <p>في نهاية الدرس، يتوقع من الطالبة أن تكون قادرة على:</p>
+                    <ul>
+                        <li>تحديد الفكرة العامة للنص والأفكار الرئيسة</li>
+                        <li>شرح المفردات الجديدة وتوظيفها في جمل مفيدة</li>
+                        <li>تحليل النص وفق عناصره الفنية</li>
+                        <li>استنتاج القيم المتضمنة في النص</li>
+                        <li>إبداء رأيها في قضية التنمية المستدامة مع التعليل</li>
+                    </ul>
+                    
+                    <h4>الوسائل التعليمية:</h4>
+                    <ul>
+                        <li>الكتاب المدرسي</li>
+                        <li>جهاز العرض (بوربوينت)</li>
+                        <li>فيديو قصير عن التنمية المستدامة</li>
+                        <li>بطاقات تعليمية</li>
+                        <li>أوراق عمل</li>
+                    </ul>
+                    
+                    <h4>خطوات الدرس:</h4>
+                    <ol>
+                        <li><strong>التمهيد (10 دقائق):</strong>
+                            <ul>
+                                <li>عرض فيديو قصير عن التنمية المستدامة</li>
+                                <li>طرح أسئلة تحفيزية: ما المقصود بالتنمية المستدامة؟ ما أهميتها للمجتمع؟</li>
+                                <li>استماع لإجابات الطالبات وتدوين أفكارهن على السبورة</li>
+                            </ul>
+                        </li>
+                        <li><strong>العرض والشرح (30 دقيقة):</strong>
+                            <ul>
+                                <li>قراءة النص قراءة نموذجية من قبل المعلمة</li>
+                                <li>قراءة الطالبات للنص قراءة جهرية</li>
+                                <li>شرح المفردات الجديدة وتوضيح معانيها</li>
+                                <li>تحليل النص وفق عناصره (الأفكار الرئيسة، الأساليب اللغوية، الصور البلاغية)</li>
+                            </ul>
+                        </li>
+                        <li><strong>النشاط والتطبيق (30 دقيقة):</strong>
+                            <ul>
+                                <li>تقسيم الطالبات إلى مجموعات تعاونية</li>
+                                <li>توزيع أوراق عمل على المجموعات تتضمن أسئلة حول النص</li>
+                                <li>مناقشة إجابات المجموعات وتقديم التغذية الراجعة</li>
+                                <li>نشاط إبداعي: كتابة فقرة قصيرة عن دور الشباب في تحقيق التنمية المستدامة</li>
+                            </ul>
+                        </li>
+                        <li><strong>التقويم (15 دقيقة):</strong>
+                            <ul>
+                                <li>طرح أسئلة شفهية للتأكد من تحقق الأهداف</li>
+                                <li>تقديم اختبار قصير (5 أسئلة) حول النص</li>
+                                <li>تقييم مشاركات الطالبات وأدائهن في الأنشطة</li>
+                            </ul>
+                        </li>
+                        <li><strong>الغلق (5 دقائق):</strong>
+                            <ul>
+                                <li>تلخيص أهم النقاط التي تم تناولها في الدرس</li>
+                                <li>ربط الدرس بواقع الطالبات وحياتهن اليومية</li>
+                                <li>تكليف الطالبات بواجب منزلي: البحث عن مشروع تنموي في المملكة وكتابة تقرير مختصر عنه</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="academic-card">
+                    <h3>خطة علاجية للطالبات المتأخرات دراسياً</h3>
+                    
+                    <h4>الفئة المستهدفة:</h4>
+                    <p>الطالبات اللاتي يعانين من صعوبات في تعلم مهارات اللغة العربية، وخاصة في مهارات القراءة والكتابة.</p>
+                    
+                    <h4>أهداف الخطة:</h4>
+                    <ul>
+                        <li>تحسين مستوى الطالبات في مهارات القراءة والكتابة</li>
+                        <li>معالجة الصعوبات التي تواجه الطالبات في فهم النصوص وتحليلها</li>
+                        <li>تعزيز ثقة الطالبات بأنفسهن وقدراتهن</li>
+                        <li>تنمية مهارات التعلم الذاتي لدى الطالبات</li>
+                    </ul>
+                    
+                    <h4>آليات التنفيذ:</h4>
+                    <ol>
+                        <li><strong>تشخيص الصعوبات:</strong>
+                            <ul>
+                                <li>إجراء اختبار تشخيصي لتحديد نقاط الضعف لدى كل طالبة</li>
+                                <li>تصنيف الطالبات حسب نوع الصعوبة ومستواها</li>
+                            </ul>
+                        </li>
+                        <li><strong>حصص تقوية:</strong>
+                            <ul>
+                                <li>تخصيص حصص إضافية أسبوعياً (حصتان) للطالبات المتأخرات دراسياً</li>
+                                <li>التركيز على المهارات الأساسية التي تعاني الطالبات من ضعف فيها</li>
+                            </ul>
+                        </li>
+                        <li><strong>أنشطة علاجية:</strong>
+                            <ul>
+                                <li>تصميم أنشطة تعليمية مبسطة ومتدرجة في الصعوبة</li>
+                                <li>استخدام وسائل تعليمية متنوعة تناسب أنماط التعلم المختلفة</li>
+                                <li>توظيف التقنية في تقديم المحتوى بطرق جاذبة ومشوقة</li>
+                            </ul>
+                        </li>
+                        <li><strong>التعلم بالأقران:</strong>
+                            <ul>
+                                <li>تكليف طالبات متفوقات بمساعدة زميلاتهن المتأخرات دراسياً</li>
+                                <li>تنظيم جلسات مذاكرة جماعية بإشراف المعلمة</li>
+                            </ul>
+                        </li>
+                        <li><strong>التواصل مع أولياء الأمور:</strong>
+                            <ul>
+                                <li>عقد لقاءات دورية مع أولياء أمور الطالبات المتأخرات دراسياً</li>
+                                <li>تزويد أولياء الأمور بإرشادات لمساعدة بناتهن في المنزل</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    
+                    <h4>التقويم والمتابعة:</h4>
+                    <ul>
+                        <li>إجراء اختبارات دورية لقياس مدى تقدم الطالبات</li>
+                        <li>متابعة أداء الطالبات في الحصص الدراسية العادية</li>
+                        <li>تقديم تقارير شهرية عن مستوى تقدم كل طالبة</li>
+                        <li>تعديل الخطة العلاجية وفقاً لنتائج التقويم</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <a href="../personal/ethics.html" class="btn">السابق: ميثاق أخلاقيات مهنة التعليم</a>
+                <a href="page2.html" class="btn btn-primary">التالي: استراتيجيات التدريس</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle dropdown menus
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const dropdownContainer = this.nextElementSibling;
+                    dropdownContainer.classList.toggle('show');
+                });
+            });
+            
+            // Manual sidebar resize functionality
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.getElementById('main-content');
+            const resizeHandle = document.getElementById('resize-handle');
+            
+            if (resizeHandle) {
+                resizeHandle.addEventListener('mousedown', initResize, false);
+            }
+            
+            function initResize(e) {
+                window.addEventListener('mousemove', resize, false);
+                window.addEventListener('mouseup', stopResize, false);
+            }
+            
+            function resize(e) {
+                // Calculate new width based on mouse position
+                const newWidth = document.body.clientWidth - e.clientX;
+                
+                // Apply min/max constraints
+                if (newWidth > 180 && newWidth < 350) {
+                    sidebar.style.width = newWidth + 'px';
+                    mainContent.style.marginRight = newWidth + 'px';
+                }
+            }
+            
+            function stopResize() {
+                window.removeEventListener('mousemove', resize, false);
+                window.removeEventListener('mouseup', stopResize, false);
+            }
+        });
+    </script>
+</body>
+</html>
