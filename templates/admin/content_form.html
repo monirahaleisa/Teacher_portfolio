@@ -1,0 +1,223 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}إضافة/تعديل محتوى{% endblock %}
+{% block header_title %}{% if content %}تعديل محتوى{% else %}إضافة محتوى جديد{% endif %}{% endblock %}
+
+{% block head_extra %}
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: '#content_html',
+        directionality: 'rtl',
+        language: 'ar',
+        plugins: 'preview paste searchreplace autolink directionality code visualblocks visualchars image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image media link | help',
+        height: 500,
+        images_upload_url: '/admin/api/upload-image',
+        automatic_uploads: true,
+        file_picker_types: 'image',
+        file_picker_callback: function (cb, value, meta) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+
+            input.onchange = function () {
+                var file = this.files[0];
+                
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var id = 'blobid' + (new Date()).getTime();
+                    var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                    var base64 = reader.result.split(',')[1];
+                    var blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
+                    
+                    cb(blobInfo.blobUri(), { title: file.name });
+                };
+                reader.readAsDataURL(file);
+            };
+            
+            input.click();
+        },
+        setup: function(editor) {
+            // Add custom button to open media library
+            editor.ui.registry.addButton('mediaLibrary', {
+                icon: 'gallery',
+                tooltip: 'مكتبة الوسائط',
+                onAction: function() {
+                    openMediaLibrary();
+                }
+            });
+            
+            // Add the button to the toolbar
+            editor.settings.toolbar = editor.settings.toolbar + ' | mediaLibrary';
+        }
+    });
+    
+    // Function to open media library modal
+    function openMediaLibrary() {
+        document.getElementById('media-library-modal').style.display = 'block';
+        loadMediaItems();
+    }
+    
+    // Load media items via AJAX
+    function loadMediaItems() {
+        const mediaContainer = document.getElementById('media-items-container');
+        
+        if (mediaContainer) {
+            mediaContainer.innerHTML = '<div class="loading">جاري تحميل الوسائط...</div>';
+            
+            fetch('/admin/api/media')
+                .then(response => response.json())
+                .then(data => {
+                    mediaContainer.innerHTML = '';
+                    
+                    if (data.length === 0) {
+                        mediaContainer.innerHTML = '<p class="empty-message">لا توجد وسائط متاحة. قم برفع بعض الملفات أولاً.</p>';
+                        return;
+                    }
+                    
+                    data.forEach(item => {
+                        const mediaItem = document.createElement('div');
+                        mediaItem.className = 'media-item';
+                        
+                        let preview = '';
+                        if (item.mime_type && item.mime_type.startsWith('image/')) {
+                            preview = `<img src="/uploads/${item.filename}" alt="${item.filename}">`;
+                        } else {
+                            preview = `<div class="document-icon"><i class="fas fa-file"></i></div>`;
+                        }
+                        
+                        mediaItem.innerHTML = `
+                            <div class="media-preview">${preview}</div>
+                            <div class="media-info">
+                                <h3>${item.filename}</h3>
+                                <button class="btn btn-sm btn-primary insert-media" data-path="/uploads/${item.filename}" data-type="${item.mime_type && item.mime_type.startsWith('image/') ? 'image' : 'file'}">إدراج</button>
+                            </div>
+                        `;
+                        
+                        mediaContainer.appendChild(mediaItem);
+                    });
+                    
+                    // Add event listeners to insert buttons
+                    document.querySelectorAll('.insert-media').forEach(button => {
+                        button.addEventListener('click', function() {
+                            insertMedia(this.dataset.path, this.dataset.type);
+                            document.getElementById('media-library-modal').style.display = 'none';
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading media:', error);
+                    mediaContainer.innerHTML = '<p class="error-message">حدث خطأ أثناء تحميل الوسائط. يرجى المحاولة مرة أخرى.</p>';
+                });
+        }
+    }
+    
+    // Insert media into TinyMCE editor
+    function insertMedia(path, type) {
+        if (tinymce && tinymce.activeEditor) {
+            if (type === 'image') {
+                tinymce.activeEditor.execCommand('mceInsertContent', false, `<img src="${path}" alt="" style="max-width: 100%; height: auto;" />`);
+            } else {
+                const filename = path.split('/').pop();
+                tinymce.activeEditor.execCommand('mceInsertContent', false, `<a href="${path}" target="_blank">${filename}</a>`);
+            }
+        }
+    }
+</script>
+<style>
+    .form-group.inline {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .form-group.inline label {
+        margin-bottom: 0;
+        white-space: nowrap;
+    }
+    
+    .loading {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+    }
+    
+    .empty-message, .error-message {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+    }
+    
+    .error-message {
+        color: var(--error-color);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-form">
+    <form method="post" action="{% if content %}{{ url_for('admin.edit_content', content_id=content.id) }}{% else %}{{ url_for('admin.new_content') }}{% endif %}">
+        <div class="form-group">
+            <label for="title">عنوان المحتوى</label>
+            <input type="text" id="title" name="title" class="form-control" value="{% if content %}{{ content.title }}{% endif %}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="section_id">القسم</label>
+            <select id="section_id" name="section_id" class="form-control" required>
+                <option value="">-- اختر القسم --</option>
+                {% for section in sections %}
+                    <option value="{{ section.id }}" {% if content and content.section_id == section.id %}selected{% endif %}>{{ section.title }}</option>
+                    {% if section.children %}
+                        {% for child in section.children %}
+                            <option value="{{ child.id }}" {% if content and content.section_id == child.id %}selected{% endif %}>-- {{ child.title }}</option>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="content_html">المحتوى</label>
+            <textarea id="content_html" name="content_html">{% if content %}{{ content.content_html }}{% endif %}</textarea>
+            <div class="form-text">استخدم محرر النصوص لإضافة وتنسيق المحتوى. يمكنك إضافة صور ووسائط من خلال أزرار المحرر.</div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> حفظ</button>
+            <a href="{{ url_for('admin.contents') }}" class="btn btn-secondary"><i class="fas fa-times"></i> إلغاء</a>
+        </div>
+    </form>
+</div>
+
+<!-- Media Library Modal -->
+<div id="media-library-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>مكتبة الوسائط</h2>
+            <button class="close-button" onclick="document.getElementById('media-library-modal').style.display='none'">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="media-items-container" class="media-grid">
+                <!-- Media items will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Close modal when clicking outside the content
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('media-library-modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    });
+</script>
+{% endblock %}

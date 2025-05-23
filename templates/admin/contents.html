@@ -1,0 +1,186 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}المحتوى{% endblock %}
+{% block header_title %}إدارة المحتوى{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="contents-management">
+    <div class="actions-bar">
+        <a href="{{ url_for('admin.new_content') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> إضافة محتوى جديد
+        </a>
+        
+        <div class="filter-section">
+            <form id="filter-form" method="get" action="{{ url_for('admin.contents') }}">
+                <div class="form-group inline">
+                    <label for="section_id">تصفية حسب القسم:</label>
+                    <select id="section_id" name="section_id" class="form-control" onchange="this.form.submit()">
+                        <option value="">جميع الأقسام</option>
+                        {% for section in sections %}
+                            <option value="{{ section.id }}" {% if request.args.get('section_id') == section.id %}selected{% endif %}>
+                                {{ section.title }}
+                            </option>
+                            {% if section.children %}
+                                {% for child in section.children %}
+                                    <option value="{{ child.id }}" {% if request.args.get('section_id') == child.id %}selected{% endif %}>
+                                        -- {{ child.title }}
+                                    </option>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    {% if contents %}
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="5%"></th>
+                        <th width="35%">العنوان</th>
+                        <th width="25%">القسم</th>
+                        <th width="15%">آخر تحديث</th>
+                        <th width="20%">الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="contents-list">
+                    {% for content in contents %}
+                        <tr class="content-item" data-id="{{ content.id }}">
+                            <td>
+                                <span class="drag-handle" data-tooltip="اسحب لتغيير الترتيب"><i class="fas fa-grip-vertical"></i></span>
+                            </td>
+                            <td>{{ content.title }}</td>
+                            <td>{{ content.section_title }}</td>
+                            <td>{{ content.updated_at|datetime }}</td>
+                            <td class="actions">
+                                <a href="{{ url_for('admin.edit_content', content_id=content.id) }}" class="btn btn-sm btn-edit">
+                                    <i class="fas fa-edit"></i> تعديل
+                                </a>
+                                <form class="delete-form" action="{{ url_for('admin.delete_content', content_id=content.id) }}" method="post" onsubmit="return confirm('هل أنت متأكد من حذف هذا المحتوى؟');">
+                                    <button type="submit" class="btn btn-sm btn-delete">
+                                        <i class="fas fa-trash"></i> حذف
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <h3>لا يوجد محتوى</h3>
+            {% if request.args.get('section_id') %}
+                <p>لا يوجد محتوى في هذا القسم. قم بإضافة محتوى جديد للبدء.</p>
+            {% else %}
+                <p>لم يتم إنشاء أي محتوى بعد. قم بإضافة محتوى جديد للبدء في بناء موقعك.</p>
+            {% endif %}
+            <a href="{{ url_for('admin.new_content') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> إضافة محتوى جديد
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Media Library Modal -->
+<div id="media-library-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>مكتبة الوسائط</h2>
+            <button class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="media-items-container" class="media-grid">
+                <!-- Media items will be loaded here -->
+                <div class="loading">جاري تحميل الوسائط...</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize sortable for contents
+        const contentsList = document.getElementById('contents-list');
+        if (contentsList) {
+            Sortable.create(contentsList, {
+                handle: '.drag-handle',
+                animation: 150,
+                onEnd: function(evt) {
+                    updateContentOrder();
+                }
+            });
+        }
+    });
+    
+    // Update content order after drag and drop
+    function updateContentOrder() {
+        const contents = [];
+        
+        // Get all contents
+        document.querySelectorAll('#contents-list > .content-item').forEach((item, index) => {
+            const contentId = item.dataset.id;
+            contents.push({
+                id: contentId,
+                order: index
+            });
+        });
+        
+        // Send updated order to server
+        fetch('/admin/api/update-content-order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ contents: contents }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showNotification('تم تحديث ترتيب المحتوى بنجاح', 'success');
+            } else {
+                showNotification('حدث خطأ أثناء تحديث ترتيب المحتوى', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error updating content order:', error);
+            showNotification('حدث خطأ أثناء تحديث ترتيب المحتوى', 'error');
+        });
+    }
+    
+    // Show notification
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        // Show notification
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+        
+        // Hide and remove after 3 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+</script>
+{% endblock %}

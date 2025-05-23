@@ -1,0 +1,40 @@
+{% extends 'public/base.html' %}
+
+{% block title %}{{ current_section.title }}{% endblock %}
+{% block header_title %}{{ current_section.title }}{% endblock %}
+
+{% block content %}
+<div class="section-page">
+    {% if contents %}
+        {% for content_item in contents %}
+            <div class="content-section">
+                <h2>{{ content_item.title }}</h2>
+                <div class="content-body">
+                    {{ content_item.content_html|safe }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    {% if child_sections %}
+        <div class="child-sections">
+            <h3>الأقسام الفرعية</h3>
+            <div class="section-links">
+                {% for child in child_sections %}
+                    <a href="{{ url_for('public.section', slug=child.slug) }}" class="section-link">
+                        <div class="section-link-inner">
+                            <h4>{{ child.title }}</h4>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    
+    {% if not contents and not child_sections %}
+        <div class="empty-section">
+            <p>لا يوجد محتوى في هذا القسم حالياً.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}مكتبة الوسائط{% endblock %}
+{% block header_title %}إدارة الوسائط{% endblock %}
+
+{% block content %}
+<div class="media-management">
+    <div class="actions-bar">
+        <a href="{{ url_for('admin.upload_media') }}" class="btn btn-primary">
+            <i class="fas fa-upload"></i> رفع ملف جديد
+        </a>
+    </div>
+    
+    {% if media_items %}
+        <div class="media-grid">
+            {% for item in media_items %}
+                <div class="media-item">
+                    <div class="media-preview">
+                        {% if item.file_type == 'image' %}
+                            <img src="/uploads/{{ item.filename }}" alt="{{ item.filename }}">
+                        {% else %}
+                            <div class="document-icon">
+                                <i class="fas fa-file"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="media-info">
+                        <h3 title="{{ item.filename }}">{{ item.filename }}</h3>
+                        <p>{{ item.file_size|filesizeformat }} • {{ item.uploaded_at|datetime }}</p>
+                        <div class="media-actions">
+                            <a href="/uploads/{{ item.filename }}" class="btn btn-sm btn-view" target="_blank">
+                                <i class="fas fa-eye"></i> عرض
+                            </a>
+                            <button class="btn btn-sm btn-copy" onclick="copyMediaUrl('/uploads/{{ item.filename }}')">
+                                <i class="fas fa-copy"></i> نسخ الرابط
+                            </button>
+                            <form class="delete-form" action="{{ url_for('admin.delete_media', media_id=item.id) }}" method="post" onsubmit="return confirm('هل أنت متأكد من حذف هذا الملف؟');">
+                                <button type="submit" class="btn btn-sm btn-delete">
+                                    <i class="fas fa-trash"></i> حذف
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="fas fa-images"></i>
+            </div>
+            <h3>لا توجد وسائط</h3>
+            <p>لم يتم رفع أي ملفات بعد. قم برفع صور أو ملفات لاستخدامها في محتوى موقعك.</p>
+            <a href="{{ url_for('admin.upload_media') }}" class="btn btn-primary">
+                <i class="fas fa-upload"></i> رفع ملف جديد
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function copyMediaUrl(url) {
+        // Create a temporary input element
+        const tempInput = document.createElement('input');
+        tempInput.value = window.location.origin + url;
+        document.body.appendChild(tempInput);
+        
+        // Select and copy the URL
+        tempInput.select();
+        document.execCommand('copy');
+        
+        // Remove the temporary element
+        document.body.removeChild(tempInput);
+        
+        // Show notification
+        showNotification('تم نسخ الرابط بنجاح', 'success');
+    }
+    
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        // Show notification
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+        
+        // Hide and remove after 3 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+</script>
+{% endblock %}

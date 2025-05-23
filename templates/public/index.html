@@ -1,0 +1,24 @@
+{% extends 'public/base.html' %}
+
+{% block title %}الصفحة الرئيسية{% endblock %}
+{% block header_title %}ملف إنجاز المعلمة منال بنت علي العيسى{% endblock %}
+
+{% block content %}
+<div class="home-page">
+    {% if contents %}
+        {% for content_item in contents %}
+            <div class="content-section">
+                <h2>{{ content_item.title }}</h2>
+                <div class="content-body">
+                    {{ content_item.content_html|safe }}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="welcome-message">
+            <h2>مرحباً بكم في ملف إنجاز المعلمة منال بنت علي العيسى</h2>
+            <p>يرجى اختيار أحد الأقسام من القائمة الجانبية لعرض المحتوى.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

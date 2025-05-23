@@ -1,0 +1,221 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}الأقسام{% endblock %}
+{% block header_title %}إدارة الأقسام{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="sections-management">
+    <div class="actions-bar">
+        <a href="{{ url_for('admin.new_section') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> إضافة قسم جديد
+        </a>
+    </div>
+    
+    {% if sections %}
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="5%"></th>
+                        <th width="40%">العنوان</th>
+                        <th width="25%">الرابط</th>
+                        <th width="15%">المحتوى</th>
+                        <th width="15%">الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="sections-list">
+                    {% for section in sections %}
+                        <tr class="section-item" data-id="{{ section.id }}">
+                            <td>
+                                <span class="drag-handle" data-tooltip="اسحب لتغيير الترتيب"><i class="fas fa-grip-vertical"></i></span>
+                            </td>
+                            <td>
+                                {{ section.title }}
+                                {% if section.children %}
+                                    <span class="child-indicator"><i class="fas fa-caret-down"></i></span>
+                                {% endif %}
+                            </td>
+                            <td>{{ section.slug }}</td>
+                            <td>
+                                <a href="{{ url_for('admin.contents') }}?section_id={{ section.id }}" class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-file-alt"></i> المحتوى
+                                </a>
+                            </td>
+                            <td class="actions">
+                                <a href="{{ url_for('admin.edit_section', section_id=section.id) }}" class="btn btn-sm btn-edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form class="delete-form" action="{{ url_for('admin.delete_section', section_id=section.id) }}" method="post" onsubmit="return confirm('هل أنت متأكد من حذف هذا القسم؟');">
+                                    <button type="submit" class="btn btn-sm btn-delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                                <a href="{{ url_for('public.section', slug=section.slug) }}" class="btn btn-sm btn-view" target="_blank">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        
+                        {% if section.children %}
+                            <tr>
+                                <td colspan="5" style="padding: 0;">
+                                    <div class="child-sections-container">
+                                        <table class="table" style="margin: 0;">
+                                            <tbody class="child-sections">
+                                                {% for child in section.children %}
+                                                    <tr class="section-item child-row" data-id="{{ child.id }}">
+                                                        <td width="5%">
+                                                            <span class="drag-handle" data-tooltip="اسحب لتغيير الترتيب"><i class="fas fa-grip-vertical"></i></span>
+                                                        </td>
+                                                        <td width="40%">{{ child.title }}</td>
+                                                        <td width="25%">{{ child.slug }}</td>
+                                                        <td width="15%">
+                                                            <a href="{{ url_for('admin.contents') }}?section_id={{ child.id }}" class="btn btn-sm btn-secondary">
+                                                                <i class="fas fa-file-alt"></i> المحتوى
+                                                            </a>
+                                                        </td>
+                                                        <td width="15%" class="actions">
+                                                            <a href="{{ url_for('admin.edit_section', section_id=child.id) }}" class="btn btn-sm btn-edit">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                            <form class="delete-form" action="{{ url_for('admin.delete_section', section_id=child.id) }}" method="post" onsubmit="return confirm('هل أنت متأكد من حذف هذا القسم؟');">
+                                                                <button type="submit" class="btn btn-sm btn-delete">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </form>
+                                                            <a href="{{ url_for('public.section', slug=child.slug) }}" class="btn btn-sm btn-view" target="_blank">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="fas fa-folder-open"></i>
+            </div>
+            <h3>لا توجد أقسام</h3>
+            <p>لم يتم إنشاء أي أقسام بعد. قم بإضافة قسم جديد للبدء في بناء هيكل موقعك.</p>
+            <a href="{{ url_for('admin.new_section') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> إضافة قسم جديد
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize sortable for main sections
+        const sectionsList = document.getElementById('sections-list');
+        if (sectionsList) {
+            Sortable.create(sectionsList, {
+                handle: '.drag-handle',
+                animation: 150,
+                onEnd: function(evt) {
+                    updateSectionOrder();
+                }
+            });
+        }
+        
+        // Initialize sortable for child sections
+        document.querySelectorAll('.child-sections').forEach(childList => {
+            Sortable.create(childList, {
+                handle: '.drag-handle',
+                animation: 150,
+                onEnd: function(evt) {
+                    updateSectionOrder();
+                }
+            });
+        });
+    });
+    
+    // Update section order after drag and drop
+    function updateSectionOrder() {
+        const sections = [];
+        
+        // Get all root sections
+        document.querySelectorAll('#sections-list > .section-item').forEach((item, index) => {
+            const sectionId = item.dataset.id;
+            sections.push({
+                id: sectionId,
+                order: index,
+                parent_id: null
+            });
+            
+            // Get child sections if any
+            const nextRow = item.nextElementSibling;
+            if (nextRow && nextRow.querySelector('.child-sections')) {
+                const childList = nextRow.querySelector('.child-sections');
+                childList.querySelectorAll('.section-item').forEach((childItem, childIndex) => {
+                    const childId = childItem.dataset.id;
+                    sections.push({
+                        id: childId,
+                        order: childIndex,
+                        parent_id: sectionId
+                    });
+                });
+            }
+        });
+        
+        // Send updated order to server
+        fetch('/admin/api/update-section-order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ sections: sections }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showNotification('تم تحديث ترتيب الأقسام بنجاح', 'success');
+            } else {
+                showNotification('حدث خطأ أثناء تحديث ترتيب الأقسام', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error updating section order:', error);
+            showNotification('حدث خطأ أثناء تحديث ترتيب الأقسام', 'error');
+        });
+    }
+    
+    // Show notification
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        // Show notification
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+        
+        // Hide and remove after 3 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+</script>
+{% endblock %}

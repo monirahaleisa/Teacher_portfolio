@@ -1,0 +1,265 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}رفع ملف جديد{% endblock %}
+{% block header_title %}رفع ملف جديد{% endblock %}
+
+{% block content %}
+<div class="upload-media">
+    <div class="upload-container">
+        <form method="post" action="{{ url_for('admin.upload_media') }}" enctype="multipart/form-data" class="upload-form">
+            <div class="upload-area" id="upload-area">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <h3>اسحب الملفات هنا</h3>
+                <p>أو انقر للاختيار من جهازك</p>
+                <input type="file" id="file" name="file" class="file-input" required>
+            </div>
+            
+            <div class="upload-preview" id="upload-preview" style="display: none;">
+                <div class="preview-container">
+                    <div class="preview-image" id="preview-image">
+                        <!-- Preview will be shown here -->
+                    </div>
+                    <div class="preview-info">
+                        <h3 id="filename-display">اسم الملف</h3>
+                        <p id="filesize-display">حجم الملف</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary" id="upload-button" disabled>
+                    <i class="fas fa-upload"></i> رفع الملف
+                </button>
+                <a href="{{ url_for('admin.media') }}" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> إلغاء
+                </a>
+            </div>
+        </form>
+    </div>
+    
+    <div class="upload-info">
+        <h3>معلومات الرفع</h3>
+        <ul>
+            <li>الحد الأقصى لحجم الملف: 16 ميجابايت</li>
+            <li>أنواع الملفات المدعومة: الصور (JPG, PNG, GIF)، المستندات (PDF, DOC, DOCX)، العروض التقديمية (PPT, PPTX)</li>
+            <li>سيتم تخزين الملفات في مجلد الوسائط وستكون متاحة للاستخدام في محتوى الموقع</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fileInput = document.getElementById('file');
+        const uploadArea = document.getElementById('upload-area');
+        const uploadPreview = document.getElementById('upload-preview');
+        const previewImage = document.getElementById('preview-image');
+        const filenameDisplay = document.getElementById('filename-display');
+        const filesizeDisplay = document.getElementById('filesize-display');
+        const uploadButton = document.getElementById('upload-button');
+        
+        // Handle file selection
+        fileInput.addEventListener('change', function() {
+            handleFileSelect(this.files[0]);
+        });
+        
+        // Handle drag and drop
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', function() {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                handleFileSelect(e.dataTransfer.files[0]);
+            }
+        });
+        
+        uploadArea.addEventListener('click', function() {
+            fileInput.click();
+        });
+        
+        // Handle file selection
+        function handleFileSelect(file) {
+            if (!file) return;
+            
+            // Display file info
+            filenameDisplay.textContent = file.name;
+            filesizeDisplay.textContent = formatFileSize(file.size);
+            
+            // Show preview
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.innerHTML = `<img src="${e.target.result}" alt="${file.name}">`;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Show icon for non-image files
+                let icon = 'fa-file';
+                
+                if (file.type.includes('pdf')) {
+                    icon = 'fa-file-pdf';
+                } else if (file.type.includes('word') || file.name.endsWith('.doc') || file.name.endsWith('.docx')) {
+                    icon = 'fa-file-word';
+                } else if (file.type.includes('powerpoint') || file.name.endsWith('.ppt') || file.name.endsWith('.pptx')) {
+                    icon = 'fa-file-powerpoint';
+                }
+                
+                previewImage.innerHTML = `<div class="file-icon"><i class="fas ${icon}"></i></div>`;
+            }
+            
+            // Show preview and enable upload button
+            uploadArea.style.display = 'none';
+            uploadPreview.style.display = 'block';
+            uploadButton.disabled = false;
+        }
+        
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+    });
+</script>
+
+<style>
+    .upload-container {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .upload-area {
+        border: 2px dashed #ddd;
+        border-radius: 10px;
+        padding: 40px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: #f9f9f9;
+    }
+    
+    .upload-area:hover, .upload-area.dragover {
+        border-color: var(--primary-color);
+        background-color: rgba(248, 165, 194, 0.05);
+    }
+    
+    .upload-icon {
+        font-size: 48px;
+        color: #ccc;
+        margin-bottom: 15px;
+    }
+    
+    .upload-area:hover .upload-icon, .upload-area.dragover .upload-icon {
+        color: var(--primary-color);
+    }
+    
+    .file-input {
+        display: none;
+    }
+    
+    .upload-preview {
+        margin: 30px 0;
+    }
+    
+    .preview-container {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        padding: 15px;
+    }
+    
+    .preview-image {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 8px;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .preview-image img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+    
+    .file-icon {
+        font-size: 48px;
+        color: #666;
+    }
+    
+    .preview-info {
+        flex: 1;
+    }
+    
+    .preview-info h3 {
+        margin-bottom: 5px;
+        color: var(--primary-dark);
+        font-size: 16px;
+        word-break: break-all;
+    }
+    
+    .preview-info p {
+        color: #666;
+        font-size: 14px;
+    }
+    
+    .upload-info {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        padding: 30px;
+    }
+    
+    .upload-info h3 {
+        color: var(--primary-dark);
+        margin-bottom: 15px;
+        font-size: 18px;
+    }
+    
+    .upload-info ul {
+        padding-right: 20px;
+    }
+    
+    .upload-info li {
+        margin-bottom: 10px;
+        position: relative;
+    }
+    
+    .upload-info li:before {
+        content: '';
+        position: absolute;
+        right: -20px;
+        top: 8px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+    }
+</style>
+{% endblock %}

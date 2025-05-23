@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}لوحة التحكم{% endblock %} - ملف إنجاز المعلمة منال بنت علي العيسى</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <h2>لوحة التحكم</h2>
+                <h3>منال بنت علي العيسى</h3>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard') }}" class="nav-link {% if request.endpoint == 'admin.dashboard' %}active{% endif %}">
+                        <i class="fas fa-tachometer-alt"></i> الرئيسية
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.sections') }}" class="nav-link {% if request.endpoint == 'admin.sections' or request.endpoint == 'admin.new_section' or request.endpoint == 'admin.edit_section' %}active{% endif %}">
+                        <i class="fas fa-folder"></i> الأقسام
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.contents') }}" class="nav-link {% if request.endpoint == 'admin.contents' or request.endpoint == 'admin.new_content' or request.endpoint == 'admin.edit_content' %}active{% endif %}">
+                        <i class="fas fa-file-alt"></i> المحتوى
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.media') }}" class="nav-link {% if request.endpoint == 'admin.media' or request.endpoint == 'admin.upload_media' %}active{% endif %}">
+                        <i class="fas fa-images"></i> الوسائط
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('public.index') }}" class="nav-link" target="_blank">
+                        <i class="fas fa-eye"></i> عرض الموقع
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('auth.logout') }}" class="nav-link">
+                        <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="main-content">
+            <div class="header">
+                <h1>{% block header_title %}لوحة التحكم{% endblock %}</h1>
+            </div>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
